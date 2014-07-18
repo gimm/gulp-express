@@ -3,35 +3,61 @@
  */
 
 var child_process = require("child_process")
-merge = require('deepmerge');
+    merge = require('deepmerge')
+    lr = require('tiny-lr')();
 
 module.exports = (function () {
-    var server = undefined,
+    var service = undefined,
         defaultOptions = {
             env: "development",
-            file: "app.js"
+            file: "app.js",
+            port: 35729
         };
 
-    return function (options) {
-
-        if (server) {    //stop
-            process.kill(server.pid);
-            server = undefined;
+    var livereload = {
+        start: function (port) {
+            lr.listen(port);
+        },
+        reload: function (fileName) {
+            lr.changed({
+                body: {
+                    files: [fileName]
+                }
+            });
         }
+    }
 
-        options = merge(options || {}, defaultOptions);
-        server = child_process.spawn('node', [options.file], {
-            NODE_ENV: options.env
-        });
-        server.stdout.setEncoding('utf8');
-        server.stdout.on('data', function (data) {
-            console.log(data);
-        });
-        server.stderr.on('data', function (data) {
-            console.log(data.toString());
-        });
-        server.on('exit', function (code) {
-            console.log('server process exit ... ', code);
-        });
+    return {
+        run: function (options) {
+            options = merge(options || {}, defaultOptions);
+
+            if (service) {    //stop
+                service.kill('SIGKILL');
+                service = undefined;
+            } else {
+                livereload.start(options.port);
+            }
+
+            service = child_process.spawn('node', [options.file], {
+                NODE_ENV: options.env
+            });
+            service.stdout.setEncoding('utf8');
+            service.stdout.on('data', function (data) {
+                console.log(data);
+            });
+            service.stderr.on('data', function (data) {
+                console.log(data.toString());
+            });
+            service.on('exit', function (code, sig) {
+                console.log('service process exit ... ', code, sig);
+            });
+            process.on('exit', function (code, sig) {
+                console.log('main process exit ... ', code, sig);
+            })
+        },
+        notify: function (event) {
+            var fileName = require('path').relative(__dirname, event.path);
+            livereload.reload(fileName);
+        }
     };
 })();

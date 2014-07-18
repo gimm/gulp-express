@@ -1,7 +1,8 @@
 {
     "name": "gulp-express",
-    "version": "0.0.2",
+    "version": "0.0.5",
     "description": "gulp plugin for express, connect",
+    "homepage": "https://github.com/gimm/gulp-express",
     "main": "index.js",
     "scripts": {
         "test": "node test.js"
@@ -21,17 +22,19 @@
     },
     "license": "ISC",
     "dependencies": {
-        "deepmerge": "~0.2.7"
+        "deepmerge": "~0.2.7",
+        "tiny-lr": "0.0.9"
     },
-    "readme": "#gulp plugin for rexpress\ntodo",
     "readmeFilename": "readme.md",
     "bugs": {
         "url": "https://github.com/gimm/gulp-express/issues"
     },
-    "_id": "gulp-express@0.0.2",
+    "_id": "gulp-express@0.0.4",
     "dist": {
-        "shasum": "8bb896e20fb8fce89ee7deddf6a649ce91d3166c"
+        "shasum": "e746e13bd320e2940c50c72165bd6325f23e78dd"
     },
-    "_from": "gulp-express@0.0.2",
-    "_resolved": "https://registry.npmjs.org/gulp-express/-/gulp-express-0.0.2.tgz"
+    "_from": "gulp-express@",
+    "_resolved": "https://registry.npmjs.org/gulp-express/-/gulp-express-0.0.4.tgz",
+    "devDependencies": {
+    }
 }
