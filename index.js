@@ -2,43 +2,36 @@
  * Created by Gimm on 7/17/14.
  */
 
-var through = require("through2")
- 	child_process = require("child_process");
+var child_process = require("child_process")
+merge = require('deepmerge');
 
-var defaultOptions = {
-	NODE_ENV: "development",
-	SERVER_SCRIPT: "app.js"
-};
-module.exports = function (options) {
-  	service = process._servers;
-	var start = function(){
-		var mode = options.NODE_ENV ? options.NODE_ENV : defaultOptions.NODE_ENV;
-		var script = options.file ? options.file : defaultOptions.SERVER_SCRIPT;
-		service = process._servers = child_process.spawn('node', [script], {
-			NODE_ENV: mode
-		});
-		service.stdout.setEncoding('utf8');
-		service.stdout.on('data', function(data) {
-			console.log(data);
-		});
-		service.stderr.on('data', function(data) {
-			console.log(data.toString());
-		});
-		service.on('exit', function (code, aa)
-		{
-			console.log('child process exited with code ' + code);
-			console.log(aa);
-		});
-	};
-	
-	var end = function (file){
-		if(service && service.kill){
-			service.kill('SIGTERM');
-			service = process._servers = null;
-		}
-		this.emit('end');
-	};
-	return through.obj(function(file, enc, cb) {
-		console.log('done');
-	});
-};
+module.exports = (function () {
+    var server = undefined,
+        defaultOptions = {
+            env: "development",
+            file: "app.js"
+        };
+
+    return function (options) {
+
+        if (server) {    //stop
+            process.kill(server.pid);
+            server = undefined;
+        }
+
+        options = merge(options || {}, defaultOptions);
+        server = child_process.spawn('node', [options.file], {
+            NODE_ENV: options.env
+        });
+        server.stdout.setEncoding('utf8');
+        server.stdout.on('data', function (data) {
+            console.log(data);
+        });
+        server.stderr.on('data', function (data) {
+            console.log(data.toString());
+        });
+        server.on('exit', function (code) {
+            console.log('server process exit ... ', code);
+        });
+    };
+})();

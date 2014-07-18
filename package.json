@@ -1,0 +1,37 @@
+{
+    "name": "gulp-express",
+    "version": "0.0.2",
+    "description": "gulp plugin for express, connect",
+    "main": "index.js",
+    "scripts": {
+        "test": "node test.js"
+    },
+    "keywords": [
+        "gulp",
+        "express",
+        "livereload",
+        "server"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/gimm/gulp-express"
+    },
+    "author": {
+        "name": "yucc2008@gmail.com"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "deepmerge": "~0.2.7"
+    },
+    "readme": "#gulp plugin for rexpress\ntodo",
+    "readmeFilename": "readme.md",
+    "bugs": {
+        "url": "https://github.com/gimm/gulp-express/issues"
+    },
+    "_id": "gulp-express@0.0.2",
+    "dist": {
+        "shasum": "8bb896e20fb8fce89ee7deddf6a649ce91d3166c"
+    },
+    "_from": "gulp-express@0.0.2",
+    "_resolved": "https://registry.npmjs.org/gulp-express/-/gulp-express-0.0.2.tgz"
+}
