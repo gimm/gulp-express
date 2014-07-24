@@ -29,7 +29,7 @@ module.exports = (function () {
 
     return {
         run: function (options) {
-            options = merge(options || {}, defaultOptions);
+            options = merge(defaultOptions, options || {});
 
             if (service) {    //stop
                 service.kill('SIGKILL');
