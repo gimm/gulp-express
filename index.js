@@ -26,10 +26,10 @@ module.exports = (function () {
             });
         }
     }
-
+    var options = merge({}, defaultOptions);
     return {
-        run: function (options) {
-            options = merge(defaultOptions, options || {});
+        run: function (newOptions) {
+            options = merge(options, newOptions || {});
 
             if (service) {    //stop
                 service.kill('SIGKILL');
