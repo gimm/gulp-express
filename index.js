@@ -53,6 +53,7 @@ module.exports = (function () {
             });
             process.on('exit', function (code, sig) {
                 console.log('main process exit ... ', code, sig);
+                service.kill();
             })
         },
         notify: function (event) {
