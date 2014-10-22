@@ -2,12 +2,12 @@
  * Created by Gimm on 7/17/14.
  */
 
-var child_process = require("child_process")
-    merge = require('deepmerge')
+var child_process = require("child_process"),
+    merge = require('deepmerge'),
     lr = require('tiny-lr')();
 
 module.exports = (function () {
-    var service = undefined,
+    var service = null,
         defaultOptions = {
             env: "development",
             file: "app.js",
@@ -25,7 +25,7 @@ module.exports = (function () {
                 }
             });
         }
-    }
+    };
     var options = merge({}, defaultOptions);
     return {
         run: function (newOptions) {
@@ -54,7 +54,7 @@ module.exports = (function () {
             process.on('exit', function (code, sig) {
                 console.log('main process exit ... ', code, sig);
                 service.kill();
-            })
+            });
         },
         notify: function (event) {
             var fileName = require('path').relative(__dirname, event.path);
