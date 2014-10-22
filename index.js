@@ -41,11 +41,12 @@ module.exports = (function () {
                 NODE_ENV: options.env
             });
             service.stdout.setEncoding('utf8');
+            service.stderr.setEncoding('utf8');
             service.stdout.on('data', function (data) {
-                console.log(data);
+                console.log(data.trim());
             });
             service.stderr.on('data', function (data) {
-                console.log(data.toString());
+                console.log(data.trim());
             });
             service.on('exit', function (code, sig) {
                 console.log('service process exit ... ', code, sig);
