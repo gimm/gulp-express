@@ -2,15 +2,15 @@
  * Created by Gimm on 7/17/14.
  */
 
-var child_process = require("child_process"),
+var child_process = require('child_process'),
     merge = require('deepmerge'),
     lr = require('tiny-lr')();
 
 module.exports = (function () {
     var service = null,
         defaultOptions = {
-            env: "development",
-            file: "app.js",
+            env: 'development',
+            file: 'app.js',
             port: 35729
         };
 
@@ -26,10 +26,9 @@ module.exports = (function () {
             });
         }
     };
-    var options = merge({}, defaultOptions);
     return {
         run: function (newOptions) {
-            options = merge(options, newOptions || {});
+            var options = merge(defaultOptions, newOptions || {});
 
             if (service) {    //stop
                 service.kill('SIGKILL');
@@ -55,6 +54,8 @@ module.exports = (function () {
                 console.log('main process exit ... ', code, sig);
                 service.kill();
             });
+
+            return service;
         },
         notify: function (event) {
             var fileName = require('path').relative(__dirname, event.path);
