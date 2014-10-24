@@ -2,15 +2,15 @@
  * Created by Gimm on 7/17/14.
  */
 
-var child_process = require("child_process")
-    merge = require('deepmerge')
+var child_process = require('child_process'),
+    merge = require('deepmerge'),
     lr = require('tiny-lr')();
 
 module.exports = (function () {
-    var service = undefined,
+    var service = null,
         defaultOptions = {
-            env: "development",
-            file: "app.js",
+            env: 'development',
+            file: 'app.js',
             port: 35729
         };
 
@@ -25,11 +25,10 @@ module.exports = (function () {
                 }
             });
         }
-    }
-    var options = merge({}, defaultOptions);
+    };
     return {
         run: function (newOptions) {
-            options = merge(options, newOptions || {});
+            var options = merge(defaultOptions, newOptions || {});
 
             if (service) {    //stop
                 service.kill('SIGKILL');
@@ -42,11 +41,12 @@ module.exports = (function () {
                 NODE_ENV: options.env
             });
             service.stdout.setEncoding('utf8');
+            service.stderr.setEncoding('utf8');
             service.stdout.on('data', function (data) {
-                console.log(data);
+                console.log(data.trim());
             });
             service.stderr.on('data', function (data) {
-                console.log(data.toString());
+                console.log(data.trim());
             });
             service.on('exit', function (code, sig) {
                 console.log('service process exit ... ', code, sig);
@@ -54,7 +54,9 @@ module.exports = (function () {
             process.on('exit', function (code, sig) {
                 console.log('main process exit ... ', code, sig);
                 service.kill();
-            })
+            });
+
+            return service;
         },
         notify: function (event) {
             var fileName = require('path').relative(__dirname, event.path);
