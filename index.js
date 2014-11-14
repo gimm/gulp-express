@@ -38,7 +38,20 @@ module.exports = (function () {
             }
 
             process.env.NODE_ENV = options.env;
-            service = child_process.spawn('node', [options.file]);
+
+            if( options.args == undefined ) {
+                service = child_process.spawn('node', [options.file], {
+                    NODE_ENV: options.env
+                });
+            } else {
+                var args = options.args;
+                args.push( options.file );
+                service = child_process.spawn('node', args, {
+                    NODE_ENV: options.env
+                });                
+            }
+
+            
             service.stdout.setEncoding('utf8');
             service.stderr.setEncoding('utf8');
             service.stdout.on('data', function (data) {
