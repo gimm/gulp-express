@@ -26,6 +26,7 @@ module.exports = (function () {
             });
         }
     };
+
     return {
         run: function (newOptions) {
             var options = merge(defaultOptions, newOptions || {});
@@ -39,19 +40,18 @@ module.exports = (function () {
 
             process.env.NODE_ENV = options.env;
 
-            if( options.args == undefined ) {
+            if (options.args === undefined) {
                 service = child_process.spawn('node', [options.file], {
                     NODE_ENV: options.env
                 });
             } else {
                 var args = options.args;
-                args.push( options.file );
+                args.push(options.file);
                 service = child_process.spawn('node', args, {
                     NODE_ENV: options.env
                 });                
             }
 
-            
             service.stdout.setEncoding('utf8');
             service.stderr.setEncoding('utf8');
             service.stdout.on('data', function (data) {
