@@ -56,7 +56,7 @@ Options to pass to gulp-express:
 * `port` LiveReload server port. Default: 35729
 
 ### server.stop()
-Stop an instance of spawned server programmatically. Useful to run acceptence tests during CI process.
+Stop the instantiated spawned server programmatically. Useful to run acceptance tests during CI process.
 
 ### server.notify(event)
 Send a notification to the livereload server in order to trigger a reload on page.
