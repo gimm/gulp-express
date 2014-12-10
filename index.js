@@ -26,6 +26,7 @@ module.exports = (function () {
             });
         }
     };
+
     return {
         run: function (newOptions) {
             var options = merge(defaultOptions, newOptions || {});
@@ -69,6 +70,12 @@ module.exports = (function () {
             });
 
             return service;
+        },
+        stop: function () {
+            if (service) {
+                service.kill('SIGKILL');
+                service = undefined;
+            }
         },
         notify: function (event) {
             var fileName = require('path').relative(__dirname, event.path);
