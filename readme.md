@@ -51,9 +51,10 @@ Returns a [ChildProcess](http://nodejs.org/api/child_process.html#child_process_
 Type: `Object`
 
 Options to pass to gulp-express:
-* `env` NONE_ENV value of child process. Default: 'development'.
-* `file` Application entry point file. Default: 'app.js'.
-* `port` LiveReload server port. Default: 35729
+* `env` NONE_ENV value of child process. Default: `'development'`.
+* `file` Application entry point file. Default: `'app.js'`.
+* `port` LiveReload server port. Default: `35729`.
+* `args` Arguments array to pass to `node` process. For example: `['--debug']`. Empty by default.
 
 ### server.stop()
 Stop the instantiated spawned server programmatically. Useful to run acceptance tests during CI process.
