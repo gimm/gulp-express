@@ -1,40 +1,39 @@
 {
-    "name": "gulp-express",
-    "version": "0.1.1",
-    "description": "gulp plugin for express, connect",
-    "homepage": "https://github.com/gimm/gulp-express",
-    "main": "index.js",
-    "scripts": {
-        "test": "node test.js"
-    },
-    "keywords": [
-        "gulp",
-        "express",
-        "livereload",
-        "server"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/gimm/gulp-express"
-    },
-    "author": {
-        "name": "yucc2008@gmail.com"
-    },
-    "license": "ISC",
-    "dependencies": {
-        "deepmerge": "~0.2.7",
-        "tiny-lr": "0.0.9"
-    },
-    "readmeFilename": "readme.md",
-    "bugs": {
-        "url": "https://github.com/gimm/gulp-express/issues"
-    },
-    "_id": "gulp-express@0.0.4",
-    "dist": {
-        "shasum": "e746e13bd320e2940c50c72165bd6325f23e78dd"
-    },
-    "_from": "gulp-express@",
-    "_resolved": "https://registry.npmjs.org/gulp-express/-/gulp-express-0.0.4.tgz",
-    "devDependencies": {
-    }
+  "name": "gulp-express",
+  "version": "0.1.2",
+  "description": "gulp plugin for express, connect",
+  "homepage": "https://github.com/gimm/gulp-express",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "gulp",
+    "express",
+    "livereload",
+    "server"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gimm/gulp-express"
+  },
+  "author": {
+    "name": "yucc2008@gmail.com"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "deepmerge": "~0.2.7",
+    "tiny-lr": "0.0.9"
+  },
+  "readmeFilename": "readme.md",
+  "bugs": {
+    "url": "https://github.com/gimm/gulp-express/issues"
+  },
+  "_id": "gulp-express@0.0.4",
+  "dist": {
+    "shasum": "e746e13bd320e2940c50c72165bd6325f23e78dd"
+  },
+  "_from": "gulp-express@",
+  "_resolved": "https://registry.npmjs.org/gulp-express/-/gulp-express-0.0.4.tgz",
+  "devDependencies": {}
 }
