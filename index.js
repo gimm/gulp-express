@@ -27,6 +27,19 @@ module.exports = (function () {
         }
     };
 
+    var mainExitListener = function (code, sig) {
+        console.log('Main process exited with code', code, sig);
+        service.kill();
+    };
+
+    var serviceExitListener = function (code, sig) {
+        console.log('Service process exited with code', code, sig);
+    };
+
+    var logData = function (data) {
+        console.log(data.trim());
+    };
+
     return {
         run: function (newOptions) {
             var options = merge(defaultOptions, newOptions || {});
@@ -34,6 +47,7 @@ module.exports = (function () {
             if (service) { // Stop
                 service.kill('SIGKILL');
                 service = undefined;
+                process.removeListener('exit', mainExitListener);
             } else {
                 livereload.start(options.port);
             }
@@ -52,19 +66,10 @@ module.exports = (function () {
             service = child_process.spawn('node', args);
             service.stdout.setEncoding('utf8');
             service.stderr.setEncoding('utf8');
-            service.stdout.on('data', function (data) {
-                console.log(data.trim());
-            });
-            service.stderr.on('data', function (data) {
-                console.log(data.trim());
-            });
-            service.on('exit', function (code, sig) {
-                console.log('service process exit ...', code, sig);
-            });
-            process.on('exit', function (code, sig) {
-                console.log('main process exit ...', code, sig);
-                service.kill();
-            });
+            service.stdout.on('data', logData);
+            service.stderr.on('data', logData);
+            service.on('exit', serviceExitListener);
+            process.on('exit', mainExitListener);
 
             return service;
         },
