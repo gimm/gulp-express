@@ -56,6 +56,10 @@ module.exports = (function () {
                 process.env.NODE_ENV = options.env;
             }
 
+            if (options.envVars) {
+                process.env = merge(process.env, options.envVars);
+            }
+
             var args = null;
             if (!options.args) {
                 args = [options.file];
@@ -63,6 +67,7 @@ module.exports = (function () {
                 args = options.args;
                 args.push(options.file);
             }
+
             service = child_process.spawn('node', args);
             service.stdout.setEncoding('utf8');
             service.stderr.setEncoding('utf8');
