@@ -61,6 +61,7 @@ Options to pass to gulp-express:
 * `file` Application entry point file. Default: `'app.js'`.
 * `port` LiveReload server port. Default: `35729`.
 * `args` Arguments array to pass to `node` process. For example: `['--debug']`. Empty by default.
+* `envVars` Object Environment key-value pairs merged into `process.env`. Empty by default.
 
 ### server.stop()
 Stop the instantiated spawned server programmatically. Useful to run acceptance tests during CI process.
