@@ -64,8 +64,7 @@ module.exports = (function () {
             if (!options.args) {
                 args = [options.file];
             } else {
-                args = options.args;
-                args.push(options.file);
+                args = [options.file].concat(options.args);
             }
 
             service = child_process.spawn('node', args);
