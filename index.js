@@ -85,9 +85,16 @@ module.exports = (function () {
             }
         },
         notify: function (event) {
-            var fileName = require('path').relative(__dirname, event.path);
-            livereload.reload(fileName);
-            return es.join();
+            if(event && event.path){
+                var fileName = require('path').relative(__dirname, event.path);
+                livereload.reload(fileName);
+            }
+
+            return es.map(function(file, done) {
+                var filePath = file.path;
+                console.log(filePath);
+                done(null, file);
+            });
         }
     };
 })();

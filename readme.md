@@ -31,10 +31,13 @@ gulp.task('server', function () {
     //gulp.watch(['{.tmp,app}/styles/**/*.css'], ['styles:css', server.notify]);
     //Event object won't pass down to gulp.watch's callback if there's more than one of them.
     //So the correct way to use server.notify is as following:
-    gulp.watch(['{.tmp,app}/styles/**/*.css'], function(){
+    gulp.watch(['{.tmp,app}/styles/**/*.css'], function(event){
         gulp.run('styles:css');
         server.notify(event);
+        //pipe support is added for server.notify since v0.1.5, 
+        //see https://github.com/gimm/gulp-express#servernotifyevent
     });
+    
     gulp.watch(['app/scripts/**/*.js'], ['jshint']);
     gulp.watch(['app/images/**/*'], server.notify);
     gulp.watch(['app.js', 'routes/**/*.js'], [server.run]);
@@ -68,6 +71,11 @@ Stop the instantiated spawned server programmatically. Useful to run acceptance 
 
 ### server.notify(event)
 Send a notification to the livereload server in order to trigger a reload on page.
+pipe support ia added after v0.1.5, so you can also do this:
+gulp.src('css/*.css')
+// …
+.pipe(gulp.dest('public/css/'))
+.pipe(server.notify())
 
 #### event
 Type: `Object`
