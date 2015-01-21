@@ -2,7 +2,8 @@
  * Created by Gimm on 7/17/14.
  */
 
-var child_process = require('child_process'),
+var path = require('path'),
+    child_process = require('child_process'),
     merge = require('deepmerge'),
     lr = require('tiny-lr')(),
     es = require('event-stream');
@@ -86,13 +87,11 @@ module.exports = (function () {
         },
         notify: function (event) {
             if(event && event.path){
-                var fileName = require('path').relative(__dirname, event.path);
-                livereload.reload(fileName);
+                livereload.reload(path.relative(__dirname, event.path));
             }
 
             return es.map(function(file, done) {
-                var filePath = file.path;
-                livereload.reload(fileName);
+                livereload.reload(path.relative(__dirname, file.path));
                 done(null, file);
             });
         }
