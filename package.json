@@ -23,17 +23,15 @@
   "license": "ISC",
   "dependencies": {
     "deepmerge": "~0.2.7",
-    "tiny-lr": "0.0.9"
+    "tiny-lr": "0.0.9",
+    "event-stream": "~3.2.1"
   },
   "readmeFilename": "readme.md",
   "bugs": {
     "url": "https://github.com/gimm/gulp-express/issues"
   },
-  "_id": "gulp-express@0.0.4",
   "dist": {
     "shasum": "e746e13bd320e2940c50c72165bd6325f23e78dd"
   },
-  "_from": "gulp-express@",
-  "_resolved": "https://registry.npmjs.org/gulp-express/-/gulp-express-0.0.4.tgz",
   "devDependencies": {}
 }

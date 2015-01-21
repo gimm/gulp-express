@@ -4,7 +4,8 @@
 
 var child_process = require('child_process'),
     merge = require('deepmerge'),
-    lr = require('tiny-lr')();
+    lr = require('tiny-lr')(),
+    es = require('event-stream');
 
 module.exports = (function () {
     var service = null,
@@ -86,6 +87,7 @@ module.exports = (function () {
         notify: function (event) {
             var fileName = require('path').relative(__dirname, event.path);
             livereload.reload(fileName);
+            return es.join();
         }
     };
 })();
