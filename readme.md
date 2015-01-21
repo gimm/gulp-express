@@ -72,12 +72,13 @@ Stop the instantiated spawned server programmatically. Useful to run acceptance 
 ### server.notify(event)
 Send a notification to the livereload server in order to trigger a reload on page.
 pipe support ia added after v0.1.5, so you can also do this:
+```js
 gulp.src('css/*.css')
 // …
 .pipe(gulp.dest('public/css/'))
 .pipe(server.notify())
-
-#### event
+```
+#### event (required when server.notify is invoked without pipe)
 Type: `Object`
 
 Event object that is normally passed to [gulp.watch](https://github.com/gulpjs/gulp/blob/master/docs/API.md#cbevent) callback.
