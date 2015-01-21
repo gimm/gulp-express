@@ -92,7 +92,7 @@ module.exports = (function () {
 
             return es.map(function(file, done) {
                 var filePath = file.path;
-                console.log(filePath);
+                livereload.reload(fileName);
                 done(null, file);
             });
         }
