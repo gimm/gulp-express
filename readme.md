@@ -51,24 +51,21 @@ app.use(require('connect-livereload')());
 ## API
 
 ### server.run([args][,options])
-Run or re-run the script file, which will create a server, a express server in most of the case, probably.
-Returns a [ChildProcess](http://nodejs.org/api/child_process.html#child_process_class_childprocess) instance of spawned server.
+Run or re-run the script file, which will create a server.
 Use the same arguments with [ChildProcess.spawn](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options) with 'node' as command.
 
-#### args(optional)
-Type: `Array`
-Array List of string arguments. The default value is `['app.js']`.
-#### options(optional)
-Type: `Object`
-The third parameter for [ChildProcess.spawn](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options), the default value is:
+
+* args(optional) - `Array` - Array List of string arguments. The default value is `['app.js']`.
+* options(optional) - `Object` - The third parameter for [ChildProcess.spawn](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options), the default value is:
 ```js
 {
-                env: {
-                    'NODE_ENV': 'development'
-                },
-                port: 35729
-            }
+    env: {
+        'NODE_ENV': 'development'
+    },
+    port: 35729
+}
 ```
+* Returns a [ChildProcess](http://nodejs.org/api/child_process.html#child_process_class_childprocess) instance of spawned server.
 
 ### server.stop()
 Stop the instantiated spawned server programmatically. Useful to run acceptance tests during CI process.
@@ -82,8 +79,5 @@ gulp.src('css/*.css')
 .pipe(gulp.dest('public/css/'))
 .pipe(server.notify())
 ```
-#### event (required when server.notify is invoked without pipe)
-Type: `Object`
-
-Event object that is normally passed to [gulp.watch](https://github.com/gulpjs/gulp/blob/master/docs/API.md#cbevent) callback.
+* event (required when server.notify is invoked without pipe) - `Object` - Event object that is normally passed to [gulp.watch](https://github.com/gulpjs/gulp/blob/master/docs/API.md#cbevent) callback.
 Should contain `path` property with changed file path.
