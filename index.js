@@ -2,7 +2,8 @@
  * Created by Gimm on 7/17/14.
  */
 
-var path = require('path'),
+var util = require('util'),
+    path = require('path'),
     child_process = require('child_process'),
     merge = require('deepmerge'),
     lr = require('tiny-lr')(),
@@ -10,10 +11,14 @@ var path = require('path'),
 
 module.exports = (function () {
     var service = null,
-        defaultOptions = {
-            env: 'development',
-            file: 'app.js',
-            port: 35729
+        defaults = {
+            args: ['app.js'],
+            options: {
+                env: {
+                    'NODE_ENV': 'development'
+                },
+                port: 35729
+            }
         };
 
     var livereload = {
@@ -30,12 +35,17 @@ module.exports = (function () {
     };
 
     var mainExitListener = function (code, sig) {
-        console.log('Main process exited with code', code, sig);
-        service.kill();
+        console.log('Service process exited with [code => %s | sig => %s]', code, sig);
+        service && service.kill();
+    };
+
+    var mainDownListener = function(code, sig) {
+        console.log('Service process exited with [code => %s | sig => %s]', code, sig);
+        process.exit();
     };
 
     var serviceExitListener = function (code, sig) {
-        console.log('Service process exited with code', code, sig);
+        console.log('Service process exited with [code => %s | sig => %s]', code, sig);
     };
 
     var logData = function (data) {
@@ -43,8 +53,9 @@ module.exports = (function () {
     };
 
     return {
-        run: function (newOptions) {
-            var options = merge(defaultOptions, newOptions || {});
+        run: function (args, options) {
+            args = (util.isArray(args) && args.length) ? args : defaults.args;
+            options = merge(defaults.options, options || {});
 
             if (service) { // Stop
                 service.kill('SIGKILL');
@@ -54,28 +65,14 @@ module.exports = (function () {
                 livereload.start(options.port);
             }
 
-            if (options.env) {
-                process.env.NODE_ENV = options.env;
-            }
-
-            if (options.envVars) {
-                process.env = merge(process.env, options.envVars);
-            }
-
-            var args = null;
-            if (!options.args) {
-                args = [options.file];
-            } else {
-                args = [options.file].concat(options.args);
-            }
-
-            service = child_process.spawn('node', args);
+            service = child_process.spawn('node', args, options);
             service.stdout.setEncoding('utf8');
             service.stderr.setEncoding('utf8');
             service.stdout.on('data', logData);
             service.stderr.on('data', logData);
             service.on('exit', serviceExitListener);
             process.on('exit', mainExitListener);
+            process.on('SIGINT', mainDownListener);
 
             return service;
         },

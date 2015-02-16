@@ -21,9 +21,7 @@ var server = require('gulp-express');
 
 gulp.task('server', function () {
     // Start the server at the beginning of the task
-    server.run({
-        file: 'app.js'
-    });
+    server.run(['app.js']);
     
     // Restart the server when file changes
     gulp.watch(['app/**/*.html'], server.notify);
@@ -52,19 +50,25 @@ app.use(require('connect-livereload')());
 
 ## API
 
-### server.run([options])
+### server.run([args][,options])
 Run or re-run the script file, which will create a server, a express server in most of the case, probably.
 Returns a [ChildProcess](http://nodejs.org/api/child_process.html#child_process_class_childprocess) instance of spawned server.
+Use the same arguments with [ChildProcess.spawn](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options) with 'node' as command.
 
-#### options
+#### args(optional)
+Type: `Array`
+Array List of string arguments. The default value is `['app.js']`.
+#### options(optional)
 Type: `Object`
-
-Options to pass to gulp-express:
-* `env` NONE_ENV value of child process. Default: `'development'`.
-* `file` Application entry point file. Default: `'app.js'`.
-* `port` LiveReload server port. Default: `35729`.
-* `args` Arguments array to pass to `node` process. For example: `['--debug']`. Empty by default.
-* `envVars` Object Environment key-value pairs merged into `process.env`. Empty by default.
+The third parameter for [ChildProcess.spawn](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options), the default value is:
+```js
+{
+                env: {
+                    'NODE_ENV': 'development'
+                },
+                port: 35729
+            }
+```
 
 ### server.stop()
 Stop the instantiated spawned server programmatically. Useful to run acceptance tests during CI process.
