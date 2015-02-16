@@ -1,6 +1,6 @@
 {
   "name": "gulp-express",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "gulp plugin for express, connect",
   "homepage": "https://github.com/gimm/gulp-express",
   "main": "index.js",
