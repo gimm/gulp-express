@@ -39,10 +39,10 @@ module.exports = (function () {
         service && service.kill();
     };
 
-    var mainDownListener = function(code, sig) {
-        console.log('Service process exited with [code => %s | sig => %s]', code, sig);
-        process.exit();
-    };
+    //var mainDownListener = function(code, sig) {
+    //    console.log('Service process exited with [code => %s | sig => %s]', code, sig);
+    //    process.exit();
+    //};
 
     var serviceExitListener = function (code, sig) {
         console.log('Service process exited with [code => %s | sig => %s]', code, sig);
@@ -72,7 +72,7 @@ module.exports = (function () {
             service.stderr.on('data', logData);
             service.on('exit', serviceExitListener);
             process.on('exit', mainExitListener);
-            process.on('SIGINT', mainDownListener);
+            //process.on('SIGINT', mainDownListener);
 
             return service;
         },
