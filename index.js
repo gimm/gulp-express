@@ -10,16 +10,16 @@ var util = require('util'),
     es = require('event-stream');
 
 module.exports = (function () {
-    var service = null,
+    var node = null,
         defaults = {
             args: ['app.js'],
             options: {
-                env: {
-                    'NODE_ENV': 'development'
-                },
+                cwd: undefined,
                 port: 35729
             }
         };
+    defaults.options.env = process.env;
+    defaults.options.env.NODE_ENV = 'development';
 
     var livereload = {
         start: function (port) {
@@ -34,22 +34,24 @@ module.exports = (function () {
         }
     };
 
-    var mainExitListener = function (code, sig) {
-        console.log('Service process exited with [code => %s | sig => %s]', code, sig);
-        service && service.kill();
-    };
+    var listener = {
+        processExit: function (code, sig) {
+            console.log('Main process exited with [code => %s | sig => %s]', code, sig);
+            node && node.kill();
+        },
 
-    //var mainDownListener = function(code, sig) {
-    //    console.log('Service process exited with [code => %s | sig => %s]', code, sig);
-    //    process.exit();
-    //};
+        //var mainDownListener = function(code, sig) {
+        //    console.log('Service process exited with [code => %s | sig => %s]', code, sig);
+        //    process.exit();
+        //};
 
-    var serviceExitListener = function (code, sig) {
-        console.log('Service process exited with [code => %s | sig => %s]', code, sig);
-    };
+        nodeExit: function (code, sig) {
+            console.log('Node process exited with [code => %s | sig => %s]', code, sig);
+        },
 
-    var logData = function (data) {
-        console.log(data.trim());
+        logData: function (data) {
+            console.log(data.trim());
+        }
     };
 
     return {
@@ -57,29 +59,29 @@ module.exports = (function () {
             args = (util.isArray(args) && args.length) ? args : defaults.args;
             options = merge(defaults.options, options || {});
 
-            if (service) { // Stop
-                service.kill('SIGKILL');
-                service = undefined;
-                process.removeListener('exit', mainExitListener);
+            if (node) { // Stop
+                node.kill('SIGKILL');
+                node = undefined;
+                process.removeListener('exit', processExitListener);
             } else {
                 livereload.start(options.port);
             }
 
-            service = child_process.spawn('node', args, options);
-            service.stdout.setEncoding('utf8');
-            service.stderr.setEncoding('utf8');
-            service.stdout.on('data', logData);
-            service.stderr.on('data', logData);
-            service.on('exit', serviceExitListener);
-            process.on('exit', mainExitListener);
+            node = child_process.spawn('node', args, options);
+            node.stdout.setEncoding('utf8');
+            node.stderr.setEncoding('utf8');
+            node.stdout.on('data', listener.logData);
+            node.stderr.on('data', listener.logData);
+            node.on('exit', listener.nodeExit);
+            process.on('exit', listener.processExit);
             //process.on('SIGINT', mainDownListener);
 
-            return service;
+            return node;
         },
         stop: function () {
-            if (service) {
-                service.kill('SIGKILL');
-                service = undefined;
+            if (node) {
+                node.kill('SIGKILL');
+                node = undefined;
             }
         },
         notify: function (event) {
