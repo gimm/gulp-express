@@ -7,7 +7,8 @@ var util = require('util'),
     child_process = require('child_process'),
     merge = require('deepmerge'),
     tinylr = require('tiny-lr'),
-    es = require('event-stream');
+    es = require('event-stream'),
+    debug = require('debug')('gulp:express');
 
 module.exports = (function () {
     var node = null,
@@ -31,7 +32,7 @@ module.exports = (function () {
             }
             lr.listen(livereloadOptions.port);
         },
-        reload: function (fileName) {
+        reload: function (filename) {
             if (lr != undefined) {
                 lr.changed({
                     body: {
@@ -39,7 +40,7 @@ module.exports = (function () {
                     }
                 });
             } else {
-                console.log('tinylr not started');
+                debug('tinylr not started');
                 node && node.kill();
             }
         }
@@ -47,19 +48,19 @@ module.exports = (function () {
 
     var listener = {
         processExit: function (code, sig) {
-            console.log('Main process exited with [code => %s | sig => %s]', code, sig);
+            debug('Main process exited with [code => %s | sig => %s]', code, sig);
             node && node.kill();
         },
 
         nodeExit: function (code, sig) {
-            console.log('Node process exited with [code => %s | sig => %s]', code, sig);
+            debug('Node process exited with [code => %s | sig => %s]', code, sig);
             if (lr != undefined) {
                 lr.close();
             }
         },
 
         logData: function (data) {
-            console.log(data.trim());
+            debug(data.trim());
         }
     };
 

@@ -22,9 +22,10 @@
   },
   "license": "WTFPL",
   "dependencies": {
+    "debug": "^2.1.1",
     "deepmerge": "~0.2.7",
-    "tiny-lr": "0.0.9",
-    "event-stream": "~3.2.1"
+    "event-stream": "~3.2.1",
+    "tiny-lr": "0.0.9"
   },
   "readmeFilename": "readme.md",
   "bugs": {
