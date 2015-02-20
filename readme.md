@@ -1,5 +1,5 @@
 # gulp-express
-===
+
 [![Livereload downloads][3]][4] [![MIT Licensed][5]](#license)
 
 [3]: http://img.shields.io/npm/dm/gulp-express.svg
@@ -17,7 +17,7 @@ A simple gulp plugin which:
     > `options.lr` is used for creating tiny-lr server.  `options` here is the first second parameter for [server.run](#serverrunargsoptions).
 
 * v0.1.7
-    > change signature for [server.run](#serverrunargsoptions), split `options  into `args` and `options`.
+    > change signature for [server.run](#serverrunargsoptions), split `options`  into `args` and `options`.
 
 * v0.1.5
     > pipe support added for [server.notify](#servernotifyevent)
