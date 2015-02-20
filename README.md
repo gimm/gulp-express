@@ -1,6 +1,6 @@
 # gulp-express
 
-[![Livereload downloads][3]][4] [![MIT Licensed][5]](#license)
+[![Livereload downloads][3]][4] [![MIT Licensed][5]](http://www.wtfpl.net/)
 
 [3]: http://img.shields.io/npm/dm/gulp-express.svg
 [4]: https://www.npmjs.com/package/gulp-express
@@ -8,7 +8,7 @@
 [5]: http://img.shields.io/badge/license-WTFPL-blue.svg
 
 A simple gulp plugin which:
- * use [`child_process.spawn`](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options) to start a node process;
+ * use [`ChildProcess.spawn`](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options) to start a node process;
  * use [`tiny-lr`](https://github.com/mklabs/tiny-lr) provide livereload ability;
 
 ## Update notice
