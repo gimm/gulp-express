@@ -40,13 +40,9 @@ module.exports = (function () {
             node && node.kill();
         },
 
-        //var mainDownListener = function(code, sig) {
-        //    console.log('Service process exited with [code => %s | sig => %s]', code, sig);
-        //    process.exit();
-        //};
-
         nodeExit: function (code, sig) {
             console.log('Node process exited with [code => %s | sig => %s]', code, sig);
+            lr.close();
         },
 
         logData: function (data) {
@@ -74,7 +70,6 @@ module.exports = (function () {
             node.stderr.on('data', listener.logData);
             node.on('exit', listener.nodeExit);
             process.on('exit', listener.processExit);
-            //process.on('SIGINT', mainDownListener);
 
             return node;
         },
