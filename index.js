@@ -58,7 +58,7 @@ module.exports = (function () {
             if (node) { // Stop
                 node.kill('SIGKILL');
                 node = undefined;
-                process.removeListener('exit', processExitListener);
+                process.removeListener('exit', listener.processExit);
             } else {
                 livereload.start(options.port);
             }
