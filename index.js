@@ -6,7 +6,7 @@ var util = require('util'),
     path = require('path'),
     child_process = require('child_process'),
     merge = require('deepmerge'),
-    lr = require('tiny-lr')(),
+    tinylr = require('tiny-lr'),
     es = require('event-stream');
 
 module.exports = (function () {
@@ -21,16 +21,25 @@ module.exports = (function () {
     defaults.options.env = process.env;
     defaults.options.env.NODE_ENV = 'development';
 
+    var lr;
     var livereload = {
-        start: function (port) {
-            lr.listen(port);
+        start: function (options) {
+            if (lr == undefined) {
+                lr = tinylr(options);
+            }
+            lr.listen(options.port);
         },
         reload: function (fileName) {
-            lr.changed({
-                body: {
-                    files: [fileName]
-                }
-            });
+            if (lr != undefined) {
+                lr.changed({
+                    body: {
+                        files: [filename]
+                    }
+                });
+            } else {
+                console.log('tinylr not started');
+                node && node.kill();
+            }
         }
     };
 
@@ -42,7 +51,9 @@ module.exports = (function () {
 
         nodeExit: function (code, sig) {
             console.log('Node process exited with [code => %s | sig => %s]', code, sig);
-            lr.close();
+            if (lr != undefined) {
+                lr.close();
+            }
         },
 
         logData: function (data) {
@@ -60,7 +71,7 @@ module.exports = (function () {
                 node = undefined;
                 process.removeListener('exit', listener.processExit);
             } else {
-                livereload.start(options.port);
+                livereload.start(options);
             }
 
             node = child_process.spawn('node', args, options);
