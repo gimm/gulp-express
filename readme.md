@@ -1,16 +1,67 @@
-# Gulp plugin for express
+# gulp-express
+===
+[![Livereload downloads][3]][4] [![MIT Licensed][5]](#license)
 
-## Description
-This plugin is simple using a child process to let you run node command, thus, it can start your customized server you have.
-The most commonly usage might be like this:
+[3]: http://img.shields.io/npm/dm/gulp-express.svg
+[4]: https://www.npmjs.com/package/gulp-express
 
-*Issues with the output should be reported on the gulp-express [issue tracker](https://github.com/gimm/gulp-express/issues).*
+[5]: http://img.shields.io/badge/license-WTFPL-blue.svg
+
+A simple gulp plugin which:
+ * use [`child_process.spawn`](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options) to start a node process;
+ * use [`tiny-lr`](https://github.com/mklabs/tiny-lr) provide livereload ability;
+
+## Update notice
+* v0.1.12
+
+    > `options.lr` is used for creating tiny-lr server.  `options` here is the first second parameter for [server.run](#serverrunargsoptions).
+
+* v0.1.7
+    > change signature for [server.run](#serverrunargsoptions), split `options  into `args` and `options`.
+
+* v0.1.5
+    > pipe support added for [server.notify](#servernotifyevent)
 
 ## Install
-
 ```bash
 $ npm install --save-dev gulp-express
 ```
+
+## API
+
+### server.run([args][,options])
+Run or re-run the script file, which will create a server.
+Use the same arguments with [ChildProcess.spawn](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options) with 'node' as command.
+
+
+* `args` - `Array` - Array List of string arguments. The default value is `['app.js']`.
+* `options` - `Object` - The third parameter for [ChildProcess.spawn](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options), the default value is:
+```js
+options = {
+    cwd: undefined,
+    lr: {//lr will be used for tiny-lr server construction
+        port: 35729
+    }
+}
+options.env = process.env;
+options.env.NODE_ENV = 'development';
+```
+* Returns a [ChildProcess](http://nodejs.org/api/child_process.html#child_process_class_childprocess) instance of spawned server.
+
+### server.stop()
+Stop the instantiated spawned server programmatically, and the tiny-lr server.
+
+### server.notify([event])
+Send a notification to the tiny-lr server in order to trigger a reload on page.
+pipe support is added after v0.1.5, so you can also do this:
+```js
+gulp.src('css/*.css')
+// …
+.pipe(gulp.dest('public/css/'))
+.pipe(server.notify())
+```
+* `event` (required when server.notify is invoked without pipe) - `Object` - Event object that is normally passed to [gulp.watch](https://github.com/gulpjs/gulp/blob/master/docs/API.md#cbevent) callback.
+Should contain `path` property with changed file path.
 
 ## Usage
 
@@ -22,7 +73,7 @@ var server = require('gulp-express');
 gulp.task('server', function () {
     // Start the server at the beginning of the task
     server.run(['app.js']);
-    
+
     // Restart the server when file changes
     gulp.watch(['app/**/*.html'], server.notify);
     gulp.watch(['app/styles/**/*.scss'], ['styles:scss']);
@@ -32,10 +83,10 @@ gulp.task('server', function () {
     gulp.watch(['{.tmp,app}/styles/**/*.css'], function(event){
         gulp.run('styles:css');
         server.notify(event);
-        //pipe support is added for server.notify since v0.1.5, 
+        //pipe support is added for server.notify since v0.1.5,
         //see https://github.com/gimm/gulp-express#servernotifyevent
     });
-    
+
     gulp.watch(['app/scripts/**/*.js'], ['jshint']);
     gulp.watch(['app/images/**/*'], server.notify);
     gulp.watch(['app.js', 'routes/**/*.js'], [server.run]);
@@ -45,39 +96,7 @@ gulp.task('server', function () {
 // app.js
 var express = require('express');
 var app = module.exports.app = exports.app = express();
+
+//you won't need 'connect-livereload' if you have livereload plugin for your browser
 app.use(require('connect-livereload')());
 ```
-
-## API
-
-### server.run([args][,options])
-Run or re-run the script file, which will create a server.
-Use the same arguments with [ChildProcess.spawn](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options) with 'node' as command.
-
-
-* args(optional) - `Array` - Array List of string arguments. The default value is `['app.js']`.
-* options(optional) - `Object` - The third parameter for [ChildProcess.spawn](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options), the default value is:
-```js
-{
-    env: {
-        'NODE_ENV': 'development'
-    },
-    port: 35729
-}
-```
-* Returns a [ChildProcess](http://nodejs.org/api/child_process.html#child_process_class_childprocess) instance of spawned server.
-
-### server.stop()
-Stop the instantiated spawned server programmatically. Useful to run acceptance tests during CI process.
-
-### server.notify(event)
-Send a notification to the livereload server in order to trigger a reload on page.
-pipe support ia added after v0.1.5, so you can also do this:
-```js
-gulp.src('css/*.css')
-// …
-.pipe(gulp.dest('public/css/'))
-.pipe(server.notify())
-```
-* event (required when server.notify is invoked without pipe) - `Object` - Event object that is normally passed to [gulp.watch](https://github.com/gulpjs/gulp/blob/master/docs/API.md#cbevent) callback.
-Should contain `path` property with changed file path.

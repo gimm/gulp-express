@@ -1,6 +1,6 @@
 {
   "name": "gulp-express",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "gulp plugin for express, connect",
   "homepage": "https://github.com/gimm/gulp-express",
   "main": "index.js",
@@ -20,7 +20,7 @@
   "author": {
     "name": "yucc2008@gmail.com"
   },
-  "license": "ISC",
+  "license": "WTFPL",
   "dependencies": {
     "deepmerge": "~0.2.7",
     "tiny-lr": "0.0.9",

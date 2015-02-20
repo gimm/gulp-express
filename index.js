@@ -15,7 +15,9 @@ module.exports = (function () {
             args: ['app.js'],
             options: {
                 cwd: undefined,
-                port: 35729
+                lr: {
+                    port: 35729
+                }
             }
         };
     defaults.options.env = process.env;
@@ -23,11 +25,11 @@ module.exports = (function () {
 
     var lr;
     var livereload = {
-        start: function (options) {
+        start: function (livereloadOptions) {
             if (lr == undefined) {
-                lr = tinylr(options);
+                lr = tinylr(livereloadOptions);
             }
-            lr.listen(options.port);
+            lr.listen(livereloadOptions.port);
         },
         reload: function (fileName) {
             if (lr != undefined) {
@@ -71,7 +73,7 @@ module.exports = (function () {
                 node = undefined;
                 process.removeListener('exit', listener.processExit);
             } else {
-                livereload.start(options);
+                livereload.start(options.lr);
             }
 
             node = child_process.spawn('node', args, options);
