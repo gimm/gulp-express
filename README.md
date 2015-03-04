@@ -14,7 +14,7 @@ A simple gulp plugin which:
 ## Update notice
 * v0.1.12
 
-    > `options.lr` is used for creating tiny-lr server.  `options` here is the first second parameter for [server.run](#serverrunargsoptions).
+    > `options.lr` is used for creating tiny-lr server.  `options` here is the second parameter for [server.run](#serverrunargsoptions).
 
 * v0.1.7
     > change signature for [server.run](#serverrunargsoptions), split `options`  into `args` and `options`.
