@@ -60,7 +60,7 @@ module.exports = (function () {
         },
 
         logData: function (data) {
-            debug(data.trim());
+            console.log(data.trim());
         }
     };
 
