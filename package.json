@@ -1,17 +1,14 @@
 {
   "name": "gulp-express",
   "version": "0.1.13",
-  "description": "gulp plugin for express, connect",
+  "description": "gulp livereload plugin",
   "homepage": "https://github.com/gimm/gulp-express",
-  "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "mocha"
   },
   "keywords": [
-    "gulp",
-    "express",
-    "livereload",
-    "server"
+    "gulpplugin",
+    "livereload"
   ],
   "repository": {
     "type": "git",
@@ -27,12 +24,12 @@
     "event-stream": "~3.2.1",
     "tiny-lr": "0.0.9"
   },
-  "readmeFilename": "readme.md",
+  "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/gimm/gulp-express/issues"
   },
-  "dist": {
-    "shasum": "e746e13bd320e2940c50c72165bd6325f23e78dd"
-  },
-  "devDependencies": {}
+  "devDependencies": {
+    "gulp-util": "^3.0.4",
+    "sinon": "^1.12.2"
+  }
 }
