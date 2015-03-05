@@ -1,6 +1,6 @@
 # gulp-express
 
-[![Build Status][1]][2] [![Livereload downloads][3]][4] [![MIT Licensed][5]](http://www.wtfpl.net/)
+[![Build Status][1]][2] [![Livereload downloads][3]][4] [![Tag][9]][8] [![MIT Licensed][5]](http://www.wtfpl.net/)
 
 [1]: http://img.shields.io/travis/gimm/gulp-express/master.svg
 [2]: https://travis-ci.org/gimm/gulp-express
@@ -10,11 +10,19 @@
 
 [5]: http://img.shields.io/badge/license-WTFPL-blue.svg
 
-A simple gulp plugin which:
+[8]: https://github.com/vohof/gulp-livereload/releases
+[9]: https://img.shields.io/github/tag/gimm/gulp-express.svg
+
+A gulp livereload plugin which does the following:
  * use [`ChildProcess.spawn`](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options) to start a node process;
  * use [`tiny-lr`](https://github.com/mklabs/tiny-lr) provide livereload ability;
 
 ## Update notice
+* v0.2.0
+
+    > get `console.log` back.
+
+
 * v0.1.12
 
     > `options.lr` is used for creating tiny-lr server.  `options` here is the second parameter for [server.run](#serverrunargsoptions).
