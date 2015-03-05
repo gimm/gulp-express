@@ -3,6 +3,7 @@
   "version": "0.1.13",
   "description": "gulp livereload plugin",
   "homepage": "https://github.com/gimm/gulp-express",
+  "main": "./index.js",
   "scripts": {
     "test": "mocha"
   },
@@ -29,7 +30,6 @@
     "url": "https://github.com/gimm/gulp-express/issues"
   },
   "devDependencies": {
-    "gulp-util": "^3.0.4",
-    "sinon": "^1.12.2"
+    "mocha": "^2.0.1"
   }
 }
