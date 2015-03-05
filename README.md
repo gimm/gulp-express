@@ -1,6 +1,9 @@
 # gulp-express
 
-[![Livereload downloads][3]][4] [![MIT Licensed][5]](http://www.wtfpl.net/)
+[![Build Status][1]][2] [![Livereload downloads][3]][4] [![MIT Licensed][5]](http://www.wtfpl.net/)
+
+[1]: http://img.shields.io/travis/gimm/gulp-express/master.svg
+[2]: https://travis-ci.org/gimm/gulp-express
 
 [3]: http://img.shields.io/npm/dm/gulp-express.svg
 [4]: https://www.npmjs.com/package/gulp-express
