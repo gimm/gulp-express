@@ -1,6 +1,6 @@
 {
   "name": "gulp-express",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "gulp livereload plugin",
   "homepage": "https://github.com/gimm/gulp-express",
   "main": "./index.js",
@@ -9,7 +9,8 @@
   },
   "keywords": [
     "gulpplugin",
-    "livereload"
+    "livereload",
+    "server"
   ],
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   },
   "license": "WTFPL",
   "dependencies": {
+    "chalk": "^1.0.0",
     "debug": "^2.1.1",
     "deepmerge": "~0.2.7",
     "event-stream": "~3.2.1",
