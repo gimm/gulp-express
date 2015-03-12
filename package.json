@@ -1,6 +1,6 @@
 {
   "name": "gulp-express",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "gulp livereload plugin",
   "homepage": "https://github.com/gimm/gulp-express",
   "main": "./index.js",

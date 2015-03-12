@@ -37,6 +37,7 @@ module.exports = (function () {
         serverExit: function (code, sig) {
             debug(info('server process exited with [code => %s | sig => %s]'), code, sig);
             if(sig !== 'SIGKILL'){
+                //server stopped unexpectedly
                 process.exit(0);
             }
         },
@@ -87,6 +88,7 @@ module.exports = (function () {
             if (server) { // server already running
                 debug(info('kill server'));
                 server.kill('SIGKILL');
+                //server.removeListener('exit', callback.serverExit);
                 server = undefined;
             } else {
                 if(config.livereload){
@@ -101,8 +103,9 @@ module.exports = (function () {
 
             server.stdout.on('data', callback.serverLog);
             server.stderr.on('data', callback.serverError);
-            server.on('exit', callback.serverExit);
-            process.on('exit', callback.processExit);
+            server.once('exit', callback.serverExit);
+
+            process.listeners('exit') || process.once('exit', callback.processExit);
         },
 
         /**
@@ -113,11 +116,13 @@ module.exports = (function () {
                 debug(info('kill server'));
                 //use SIGHUP instead of SIGKILL, see issue #34
                 server.kill('SIGKILL');
+                //server.removeListener('exit', callback.serverExit);
                 server = undefined;
             }
             if(lr){
                 debug(info('close livereload server'));
                 lr.close();
+                //TODO how to stop tiny-lr from hanging the terminal
                 lr = undefined;
             }
         },
