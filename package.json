@@ -8,9 +8,10 @@
     "test": "mocha"
   },
   "keywords": [
-    "gulpplugin",
+    "gulp-plugin",
     "livereload",
-    "server"
+    "server",
+    "express"
   ],
   "repository": {
     "type": "git",
