@@ -10,7 +10,7 @@
 
 [5]: http://img.shields.io/badge/license-WTFPL-blue.svg
 
-[8]: https://github.com/vohof/gulp-livereload/releases
+[8]: https://github.com/gimm/gulp-express/releases
 [9]: https://img.shields.io/github/tag/gimm/gulp-express.svg
 
 A gulp plugin which serve the app with livereload, internally, it does the following:
