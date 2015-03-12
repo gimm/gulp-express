@@ -85,6 +85,7 @@ module.exports = (function () {
             }
 
             if (server) { // server already running
+                debug(info('kill server'));
                 server.kill('SIGKILL');
                 server = undefined;
             } else {
@@ -109,11 +110,13 @@ module.exports = (function () {
          */
         stop: function () {
             if (server) {
+                debug(info('kill server'));
                 //use SIGHUP instead of SIGKILL, see issue #34
                 server.kill('SIGKILL');
                 server = undefined;
             }
             if(lr){
+                debug(info('close livereload server'));
                 lr.close();
                 lr = undefined;
             }
@@ -126,11 +129,15 @@ module.exports = (function () {
          */
         notify: function (event) {
             if(event && event.path){
-                lr.changed({body: {files: [path.relative(__dirname, event.path)]}});
+                var filepath = path.relative(__dirname, event.path);
+                debug(info('file(s) changed: %s'), event.path);
+                lr.changed({body: {files: [filepath]}});
             }
 
             return es.map(function(file, done) {
-                lr.changed({body: {files: [path.relative(__dirname, file.path)]}});
+                var filepath = path.relative(__dirname, file.path);
+                debug(info('file(s) changed: %s'), filepath);
+                lr.changed({body: {files: [filepath]}});
                 done(null, file);
             });
         }
