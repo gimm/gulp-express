@@ -1,4 +1,5 @@
-# gulp-express
+please use [gulp-live-server](https://github.com/gimm/gulp-express) instead, it's a new version of `gulp-express` with a better name and new features.
+===
 
 [![Build Status][1]][2] [![Livereload downloads][3]][4] [![Tag][9]][8] [![MIT Licensed][5]](http://www.wtfpl.net/)
 
