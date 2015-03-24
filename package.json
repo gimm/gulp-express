@@ -9,7 +9,7 @@
     "install": "echo \"*** Please use [gulp-live-server] instead! *** \""
   },
   "keywords": [
-    "gulp-plugin",
+    "gulpplugin",
     "livereload",
     "server",
     "express"
