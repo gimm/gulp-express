@@ -38,7 +38,9 @@ module.exports = (function () {
             debug(info('server process exited with [code => %s | sig => %s]'), code, sig);
             if(sig !== 'SIGKILL'){
                 //server stopped unexpectedly
-                process.exit(0);
+                if (lr) {
+                    lr.close();
+                }
             }
         },
 
