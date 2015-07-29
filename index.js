@@ -26,7 +26,7 @@ module.exports = (function () {
         info = chalk.gray,
         error = chalk.bold.red;
     config.options.env = process.env;
-    config.options.env.server_ENV = 'development';
+    config.options.env.NODE_ENV = 'development';
 
     var callback = {
         processExit: function (code, sig) {
