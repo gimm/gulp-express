@@ -82,7 +82,7 @@ module.exports = (function () {
             }else if(livereload){
                 if(typeof livereload === 'object'){
                     config.livereload = livereload;
-                }else{
+                }else if (typeof livereload === 'number'){
                     config.livereload.port = livereload;
                 }
             }
